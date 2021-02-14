@@ -3,7 +3,7 @@ const serverDockerLogger = require('./server')
 const config = require("./config.json");
 const dockerLogger = require('./DockerLogger'); 
 
-/* ============================================ */
+/* ==================Entry Point========================== */
 dockerLogger.start();
 
 serverDockerLogger.listen(config.port, () => {
