@@ -1,0 +1,114 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "description": "This is an API UI for DockerLogger, created by Elad Laor, for [Codefresh](https://codefresh.io)",
+    "version": "1.0.0",
+    "title": "DockerLogger",
+    "contact": { "email": "eladlaor88@gmail.com" }
+  },
+  "basePath": "/",
+  "tags": [
+    {
+      "name": "log",
+      "description": "Interact with logs on the storage layer"
+    },
+    {
+      "name": "container",
+      "description": "View information about the containers dockerLogger is listening to"
+    }
+  ],
+  "schemes": ["http"],
+  "paths": {
+    "/log": {
+      "get": {
+        "tags": ["log"],
+        "summary": "Read Docker logs, and optionally filter logs",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "containerName",
+            "in": "query",
+            "description": "Show only logs created by a container with a matching name",
+            "required": false,
+            "type": "string"
+          },
+          {
+            "name": "logType",
+            "in": "query",
+            "description": "Show only logs of a certain type",
+            "required": false,
+            "type": "string",
+              "enum": ["out", "err"]
+          },
+          {
+            "name": "minutesAgo",
+            "in": "query",
+            "description": "Show only messages from the past X minutes",
+            "required": false,
+            "type": "integer"
+          }
+        ],
+        "responses": { "200": { "description": "Logs retrieved" } },
+        "security": []
+      },
+      "delete": {
+        "tags": ["log"],
+        "summary": "Delete all logs messages",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": { "200": { "description": "Logs deleted" } },
+        "security": []
+      },
+      "post": {
+        "tags": ["log"],
+        "summary": "Insert a new fake log message",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [],
+        "responses": { "200": { "description": "Log entry created" } },
+        "security": []
+      }
+    },
+    "/container": {
+      "get": {
+        "tags": ["container"],
+        "summary": "List the current containers dockerLogger is logging",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [      ],
+        "responses": { "200": { "description": "Containers list retrieved" } },
+        "security": []
+      }
+    }
+  },
+  "definitions": {
+    "Message": {
+      "type": "object",
+      "properties": {
+        "_id": { "type": "string" },
+        "logged_message": { "type": "string" },
+        "log_type": { "type": "string" },
+        "container": { "type": "string" },
+        "image": { "type": "string" },
+        "name": { "type": "string" },
+        "time": { "type": "string" }
+      },
+      "xml": { "name": "Message" }
+    },
+    "Container": {
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "name": { "type": "string" },
+        "image": { "type": "string" }
+      },
+      "xml": { "name": "Message" }
+    }
+  }
+}

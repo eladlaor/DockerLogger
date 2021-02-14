@@ -1,0 +1,19 @@
+{
+  "port": 55000,
+  "storage": "mongoDB",
+  "currentContainersFile": ".attachedContainers.json",
+  "logErrorsOfAll": true,
+  "logStoppedContainersAlso": true,
+  "imageSettings": {
+    "logmaker": {
+      "lowListenThreshold": 5,
+      "attachOneForEvery" : 3,
+      "maxAttached": 10
+    },
+    "*": {
+      "lowListenThreshold": 2,
+      "attachOneForEvery" : 2,
+      "maxAttached": 3
+    }
+  }
+}

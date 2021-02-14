@@ -1,0 +1,15 @@
+{
+  "name": "logging",
+  "version": "1.0.0",
+  "description": "a simple container, able to send logs either to stdout or stderr",
+  "main": "log-maker.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "elad laor",
+  "license": "ISC",
+  "dependencies": {
+    "dockerode": "^3.2.1",
+    "express": "^4.17.1"
+  }
+}

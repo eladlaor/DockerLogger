@@ -1,0 +1,18 @@
+{
+  "name": "dockerLogger",
+  "version": "1.0.0",
+  "description": "keeps track of the logs made by selected containers, allowing filtered retrieval.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "eladlaor",
+  "license": "ISC",
+  "dependencies": {
+    "dockerode": "^3.2.1",
+    "express": "^4.17.1",
+    "memory-cache": "^0.2.0",
+    "mongoose": "^5.11.15",
+    "swagger-ui-express": "^4.1.6"
+  }
+}
