@@ -7,8 +7,9 @@ const config = require("./config.json");
 const mcache = require('memory-cache'); 
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
-
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+
+const MINUTE_TO_MILLISECOND = 60000;
 
 /* ============================================ */
 const cache = (duration) => {
@@ -49,9 +50,9 @@ app.get("/log", cache(30), async (req, res) => {
   if (logType) {
     dbQuery.logType = logType;
   }
-  
+
   if (minutesAgo) {
-    const millisecondsAgo = minutesAgo * 60000;
+    const millisecondsAgo = minutesAgo * MINUTE_TO_MILLISECOND;
     const currInMilliSecs = new Date().valueOf();
     const since = currInMilliSecs - millisecondsAgo; 
     dbQuery.time = { "$gte": new Date(since) }
