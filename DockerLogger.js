@@ -76,7 +76,7 @@ async function logContainer(containerId) {
   } else if (detectedContainersCounter[containerImage].listenedTo >= maxAttached) {
     shouldListen = false;
   } else if (
-    detectedContainersCounter[containerImage].listenedTo >=
+    detectedContainersCounter[containerImage].listenedTo >
       lowListenThreshold &&
     detectedContainersCounter[containerImage].total % attachOneForEvery != 0
   ) {

@@ -6,8 +6,8 @@
   "logStoppedContainersAlso": true,
   "imageSettings": {
     "logmaker": {
-      "lowListenThreshold": 5,
-      "attachOneForEvery" : 3,
+      "lowListenThreshold": 3,
+      "attachOneForEvery" : 2,
       "maxAttached": 10
     },
     "*": {
