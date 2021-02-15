@@ -12,23 +12,23 @@
     Open the "config.json" file,
     and set the fields to your desired values:
 
-        port:
+        port: 
             int
             The port number on your localhost, which the program will listen to.
 
-        storage:
+        storage: 
             string
-            The type of storage API you'd like to work with.
-                Please note:
+            The type of storage API you'd like to work with. 
+                Please note: 
                 Even though there is a level of abstraction to this element of the project,
                 some functions in the current internal implementation
                 still rely specifically on MongoDB API.
 
-        currentContainersFile:
+        currentContainersFile: 
             string
             the file name which will log the info about all attached containers.
 
-        logAllErrors:
+        logAllErrors: 
             boolean
             Determine whether or not to log every single stderr log produced by
             every container (regardless of the selection filter).
@@ -43,7 +43,7 @@
             setting each one as its own object,
             just like the example called "YourImageName".
                 
-                lowListenThreshold:
+                lowListenThreshold: 
                 int
                 Determine the lower threshold from which a reduction logic will apply,
                 with the use of the next configurable field, called:
@@ -51,7 +51,7 @@
                 attachOneForEvery:
                 int
                 In case there more than <lowListenThreshold> attached containers -
-                belonging to this specific image -
+                belonging to this specific image - 
                 then no longer will every new container (of this image) be attached to the logger.
                 Instead, only 1 out of <attachOneForEvery> new containers (of this image)
                 will be attached to the logger.
@@ -70,10 +70,10 @@
     
 ```    node index.js  ```
 
-        after a moment, you'll see the following output:
-        //
+        after a moment, you'll see the following output: 
+        // 
         DockerLogger is now listening at port http:localhost:<config.port>
-        //
+        // 
         
         Please note:
             At the current version of this program,
@@ -94,7 +94,7 @@
     Specific Issues:
 
         Regarding:
-            GET / container:
+            GET / container: 
             The request which lists the containers that are currently attached to DockerLogger.
 
                 In case there are no any running containers at the time of execution,
@@ -113,26 +113,29 @@
             Timestamps:
             It currently shows 2 hours behind Israel time.
     
-    Possible Expansions:
+    Further improvements:
 
         Enhance selection logic:
+        
+            A better selection logic would have been taken into account the frequency of usage
+            for each container and/or image, and would analyze it to determine dynamically
+            its level of importance to the user.
+            Through such a mechanism, the user would both:
+                Be required to less effort in configurations
+                Get a better, more dynamic and service to answer his/her needs.
 
             Better flexibility as to the the type of logs tracked for an individual container:
-                In the existing implementation,
+                In the existing implementation, 
                 it's either listening to the stderr of all containers,
                 or to no stderr of anyone at all.
                 This would be one of the first things I'd improve given more time.
-
-            Also,
-            I'd try to implement a logic that attaches containers as a factor of the frequency of their usage,
-            meaning, the number of "get logs" requests made to a specific container in a given time.
 
         Make the interface more flexible:
 
             Delete:
                 delete one specific log
                 delete logs of specific container:
-                    delete all of its stderr
+                    delete all of its stderr 
                     delete all its stdout
 
             Post:
@@ -144,22 +147,22 @@
         Complete the abstraction of DB model:
             generify all the lines of code which at this point still rely specifically on MongoDB.
 
-        Shorten some functions
-            Primarily, logContainer().
-
-        Learn about ways to implement deeper, more automated and more informative tests.
+        Improve function compartmentalization
+            Primarily, of logContainer().
+            
+        Testing
+            Learn about ways to implement deeper, more automated and more informative tests.
+            
+        Research
+            I would continue learning about what goes on behind the curtains. The why's.
+        
+        Shorten this README :)
+            Making it more concise and visually-friendly.
 
 ## What did I learn
 
     Thanks to this task,
     I've made my first-ever steps in the following topics:
-        Javascript
-        Docker
-        NodeJS
-        Express
-        MongoDB
-        UI (Swagger)
+        Javascript, Docker, NodeJS, Express, MongoDB, and producing a UI.
         
     Looking forward to keep learning :)
-
-
