@@ -19,6 +19,7 @@ const cache = (duration) => {
     if (cachedBody) {
       res.send(cachedBody)
       return;
+
     } else {
       res.sendResponse = res.send;
       res.send = (body) => {
@@ -36,7 +37,7 @@ app.get("/", (req, res) => {
   res.send("<h1>welcome to the <i>logger</i> buddy!</h1>"); 
 });
 
-app.get("/log", cache(30), async (req, res) => {
+app.get("/log", cache(30), async (req, res) => { 
   const name = req.query.containerName;
   const logType = req.query.logType; 
   const minutesAgo = req.query.minutesAgo; 

@@ -1,4 +1,4 @@
-/* ==================Entry Point=============== */
+/* ============================================ */
 const serverDockerLogger = require('./server')
 const config = require("./config.json");
 const dockerLogger = require('./DockerLogger'); 

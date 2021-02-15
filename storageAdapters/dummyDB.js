@@ -1,9 +1,9 @@
-const RELEVANT_CHARS = 39;
+const relevantChars = 39;
 
 function writeLog(message, containerInfo) {
   console.debug(
     "Writing new message to the dummyDB adapter:",
-    message.substring(RELEVANT_CHARS),
+    message.substring(relevantChars),
     containerInfo.Id,
     containerInfo.Config.Image,
     containerInfo.Name

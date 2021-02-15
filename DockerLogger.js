@@ -68,7 +68,7 @@ async function logContainer(containerId) {
     attachOneForEvery = config.imageSettings[containerImage].attachOneForEvery;
   }
   
-  if (!detectedContainersCounter[containerImage]) { // if (first encounter with this image)
+  if (!detectedContainersCounter[containerImage]) { 
     detectedContainersCounter[containerImage] = {
       listenedTo: 0,
       total: 0,
@@ -90,11 +90,11 @@ async function logContainer(containerId) {
 
     detectedContainersCounter[containerImage].listenedTo++;
     const logsStdout = await container.logs({
-      ...defaultSettings, // destructuring
+      ...defaultSettings, 
       stdout: true,
     });
-    // now logs_stdout attached itself to the container's logs, and now we are listening to them
 
+    
     logsStdout.on("data", (
       incoming_message // 'on' sends the content of future events (message [in buffer format] in this case) to param
     ) => storage.writeLog(incoming_message, containerInfo));
