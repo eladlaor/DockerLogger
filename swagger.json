@@ -13,7 +13,7 @@
       "description": "Interact with logs on the storage layer"
     },
     {
-      "name": "container",
+      "name": "containers",
       "description": "View information about the containers dockerLogger is listening to"
     }
   ],
@@ -65,7 +65,7 @@
       },
       "post": {
         "tags": ["log"],
-        "summary": "Insert a new fake log message",
+        "summary": "Insert an artificial log message",
         "description": "",
         "consumes": ["application/json"],
         "produces": ["application/json"],
@@ -74,10 +74,10 @@
         "security": []
       }
     },
-    "/container": {
+    "/containers": {
       "get": {
-        "tags": ["container"],
-        "summary": "List the current containers dockerLogger is logging",
+        "tags": ["containers"],
+        "summary": "List the containers that are currently attached to the DockerLogger",
         "description": "",
         "consumes": ["application/json"],
         "produces": ["application/json"],

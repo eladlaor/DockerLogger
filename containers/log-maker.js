@@ -3,12 +3,12 @@ const Dockerode = require('dockerode');
 const dockerConnection = new Dockerode();
 const express = require('express');
 const app = express();
-const port = 50000;
+const port = 4000;
 
 /* ============================================ */
 app.get('/', (req, res) => {
 	console.log("Fulfilling my purpose in life as a container: creating a log!");
-	res.send("Welcome to log-maker! Go to '/log_stdout' to send a log to stdout, or to '/log_stderr' to send it to stderr.");
+	res.send("<h1>Welcome to log-maker!</h1> Go to '/log_stdout' to send a log to stdout, or to '/log_stderr' to send it to stderr.");
 })
 
 app.get('/hi', (req, res) => {
@@ -22,8 +22,8 @@ app.get('/log_stdout', (req, res) => {
 })
 
 app.get('/log_stderr', (req, res) => {
-	console.error("err-ic clapton! this log was sent to stderr");
-	res.send("err-ic clapton! this log was sent to stderr");
+	console.error("err-gonomic! this log was sent to stderr");
+	res.send("err-gonomic! this log was sent to stderr");
 })
 
 app.listen(port, () => {

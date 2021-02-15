@@ -5,13 +5,13 @@ const app = express();
 const storage = require("./storage");
 const config = require("./config.json");
 const mcache = require('memory-cache'); 
-const swaggerUi = require("swagger-ui-express");
+const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const minuteToMillisecond = 60000;
 const secondsInCache = 30;
 const milliSecondsWaitingBeforeRemoval = 1000;
 
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 /* ============================================ */
 const cache = (duration) => {
@@ -66,7 +66,7 @@ app.get("/log", cache(secondsInCache), async (req, res) => {
   res.send(await storage.getLogs(dbQuery)); 
 });
 
-app.get("/container", async (req, res) => {
+app.get("/containers", async (req, res) => {
   const data = JSON.parse(fs.readFileSync(config.currentContainersFile));
   res.send(data);
 });
