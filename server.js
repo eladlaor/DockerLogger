@@ -8,6 +8,8 @@ const mcache = require('memory-cache');
 const swaggerUi = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const minuteToMillisecond = 60000;
+const secondsInCache = 30;
+const milliSecondsWaitingBeforeRemoval = 1000;
 
 app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
@@ -23,7 +25,7 @@ const cache = (duration) => {
     } else {
       res.sendResponse = res.send;
       res.send = (body) => {
-        mcache.put(key, body, duration * 1000);
+        mcache.put(key, body, duration * milliSecondsWaitingBeforeRemoval);
         res.sendResponse(body);
       }
       next();
@@ -37,7 +39,7 @@ app.get("/", (req, res) => {
   res.send("<h1>welcome to the <i>logger</i> buddy!</h1>"); 
 });
 
-app.get("/log", cache(30), async (req, res) => { 
+app.get("/log", cache(secondsInCache), async (req, res) => { 
   const name = req.query.containerName;
   const logType = req.query.logType; 
   const minutesAgo = req.query.minutesAgo; 
