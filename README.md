@@ -108,10 +108,6 @@
             Building a new image at runtime:
                 There is NO problem with running new CONTAINERS after DockerLogger is already running.
                 However, there's an error that requires fixing, when building a new image while the program is running.
-
-        Regarding:
-            Timestamps:
-            It currently shows 2 hours behind Israel time.
     
     Further improvements:
 
