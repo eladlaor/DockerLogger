@@ -4,7 +4,7 @@ const express = require("express");
 const app = express(); 
 const storage = require("./storage");
 const config = require("./config.json");
-const mcache = require("memory-cache"); 
+const cacheModule = require("memory-cache"); 
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const minuteToMillisecond = 60000;
@@ -23,14 +23,16 @@ app.get("/", (req, res) => {
 const cache = (duration) => {
   return (req, res, next) => {
     let key = '__express__' + req.originalUrl || req.url;
-    let cachedBody = mcache.get(key);
+    let cachedBody = cacheModule.get(key);
     if (cachedBody) {      
       res.send(cachedBody)
+      console.log("retrieved by CACHE, thank you cache!");
       return;
     } else {
+      console.log("retrieved by the db, thank you db!");
       res.sendResponse = res.send;
       res.send = (body) => {
-        mcache.put(key, body, duration * milliSecondsWaitingBeforeRemoval);
+        cacheModule.put(key, body, duration * milliSecondsWaitingBeforeRemoval);
         res.sendResponse(body);
       }
       next();
