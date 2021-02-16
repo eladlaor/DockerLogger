@@ -144,7 +144,8 @@
             generify all the lines of code which at this point still rely specifically on MongoDB.
 
         Improve function compartmentalization
-            Primarily, of logContainer().
+            Primarily of logContainer(), but also of start(), and perhaps others - 
+            in order to provide a better implementation of the Single Responsibility prinicple.
             
         Testing
             Learn about ways to implement deeper, more automated and more informative tests.
