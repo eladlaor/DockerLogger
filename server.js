@@ -29,7 +29,6 @@ const cache = (duration) => {
       console.log("retrieved by CACHE, thank you cache!");
       return;
     } else {
-      console.log("retrieved by the db, thank you db!");
       res.sendResponse = res.send;
       res.send = (body) => {
         cacheModule.put(key, body, duration * milliSecondsWaitingBeforeRemoval);
@@ -62,7 +61,7 @@ app.get("/logs", cache(secondsInCache), async (req, res) => {
     dbQuery.time = { "$gte": new Date(since) }
   }
 
-  console.log(`someone wants to check up on the container named: ${name}`);
+  console.log(`the logs of the container named: ${name} are now retrieved from the db!`);
 
   res.send(await storage.getLogs(dbQuery)); 
 });
