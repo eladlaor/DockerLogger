@@ -93,8 +93,8 @@
 
     Specific Issues:
 
-        Regarding:
-            GET / container: 
+        Regarding
+            GET / container
             The request which lists the containers that are currently attached to DockerLogger.
 
                 In case there are no any running containers at the time of execution,
@@ -104,15 +104,14 @@
                 In any other case, the request will result in the expected valid output:
                 the current state of attached containers.
 
-        Regarding:
+        Regarding
             Building a new image at runtime:
                 There is NO problem with running new CONTAINERS after DockerLogger is already running.
                 However, there's an error that requires fixing, when building a new image while the program is running.
     
     Further improvements:
 
-        Enhance selection logic:
-        
+        Enhance selection logic
             A better selection logic would have been taken into account the frequency of usage
             for each container and/or image, and would analyze it to determine dynamically
             its level of importance to the user.
@@ -127,7 +126,6 @@
                 This would be one of the first things I'd improve given more time.
 
         Make the interface more flexible:
-
             Delete:
                 delete one specific log
                 delete logs of specific container:
@@ -140,7 +138,7 @@
                     to stdout
                     to debug
 
-        Complete the abstraction of DB model:
+        Complete the abstraction of DB model
             generify all the lines of code which at this point still rely specifically on MongoDB.
 
         Improve function compartmentalization
