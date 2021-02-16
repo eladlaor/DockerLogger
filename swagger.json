@@ -9,7 +9,7 @@
   "basePath": "/",
   "tags": [
     {
-      "name": "log",
+      "name": "logs",
       "description": "Interact with logs on the storage layer"
     },
     {
@@ -19,9 +19,9 @@
   ],
   "schemes": ["http"],
   "paths": {
-    "/log": {
+    "/logs": {
       "get": {
-        "tags": ["log"],
+        "tags": ["logs"],
         "summary": "Read Docker logs, and optionally filter logs",
         "description": "",
         "consumes": ["application/json"],
@@ -54,7 +54,7 @@
         "security": []
       },
       "delete": {
-        "tags": ["log"],
+        "tags": ["logs"],
         "summary": "Delete all logs messages",
         "description": "",
         "consumes": ["application/json"],
@@ -64,7 +64,7 @@
         "security": []
       },
       "post": {
-        "tags": ["log"],
+        "tags": ["logs"],
         "summary": "Insert an artificial log message",
         "description": "",
         "consumes": ["application/json"],

@@ -17,13 +17,13 @@ app.get('/hi', (req, res) => {
 })
 
 app.get('/log_stdout', (req, res) => {
-	console.log("out-standing! this log was sent to stdout");
-	res.send("out-standing! this log was sent to stdout");
+	console.log("out-standing! This log was sent to stdout");
+	res.send("out-standing! A log was sent to stdout");
 })
 
 app.get('/log_stderr', (req, res) => {
-	console.error("err-gonomic! this log was sent to stderr");
-	res.send("err-gonomic! this log was sent to stderr");
+	console.error("err-gonomic! This log was sent to stderr");
+	res.send("err-gonomic! A log was sent to stderr");
 })
 
 app.listen(port, () => {

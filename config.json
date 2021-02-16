@@ -3,16 +3,21 @@
   "storage": "mongoDB",
   "currentContainersFile": ".attachedContainers.json",
   "logErrorsOfAll": true,
-  "logStoppedContainersAlso": true,
+  "logStoppedContainersAlso": false,
   "imageSettings": {
     "exampleimage": {
       "lowListenThreshold": 5,
-      "attachOneForEvery" : 2,
-      "maxAttached": 10
+      "attachOneForEvery" : 3,
+      "maxAttached": 80
+    },
+    "examplepercent" : {
+      "lowListenThreshold": 1,
+      "attachOneForEvery" : 10,
+      "maxAttached": 50      
     },
     "*": {
       "lowListenThreshold": 2,
-      "attachOneForEvery" : 2,
+      "attachOneForEvery" : 1,
       "maxAttached": 10
     }
   }

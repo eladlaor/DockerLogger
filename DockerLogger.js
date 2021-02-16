@@ -1,9 +1,9 @@
 /*  ========================================= */
-const fs = require('fs'); 
-const Dockerode = require("dockerode");
-const dockerConnection = new Dockerode();
+const fs = require("fs");
 const storage = require("./storage"); 
 const config = require("./config.json");
+const Dockerode = require("dockerode");
+const dockerConnection = new Dockerode();
 
 /*  ========================================= */
 const detectedContainersCounter = {};
@@ -11,7 +11,7 @@ const attachedContainers = [];
 
 /*  ========================================= */
 function saveContainerAttachment(containerInfo) {  
-  attachedContainers.push(containerInfo)
+  attachedContainers.push(containerInfo);
   const data = JSON.stringify(attachedContainers);
   fs.writeFileSync(config.currentContainersFile, data);
 }
@@ -94,10 +94,8 @@ async function logContainer(containerId) {
       stdout: true,
     });
 
-    
-    logsStdout.on("data", (
-      incoming_message // 'on' sends the content of future events (message [in buffer format] in this case) to param
-    ) => storage.writeLog(incoming_message, containerInfo));
+// 'on' sends the content of future events (Message model [in buffer format] in this case) to param
+    logsStdout.on("data", (incoming_message) => storage.writeLog(incoming_message, containerInfo));
   }
 
   detectedContainersCounter[containerImage].total++;

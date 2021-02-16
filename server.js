@@ -4,7 +4,7 @@ const express = require("express");
 const app = express(); 
 const storage = require("./storage");
 const config = require("./config.json");
-const mcache = require('memory-cache'); 
+const mcache = require("memory-cache"); 
 const swaggerUI = require("swagger-ui-express");
 const swaggerDocument = require("./swagger.json");
 const minuteToMillisecond = 60000;
@@ -14,14 +14,19 @@ const milliSecondsWaitingBeforeRemoval = 1000;
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
 /* ============================================ */
+app.get("/", (req, res) => {
+  console.log("someone just entered the logger service"); 
+  res.send("<h1>welcome to the <i>logger!</i></h1>"); 
+});
+
+/* ============================================ */
 const cache = (duration) => {
   return (req, res, next) => {
     let key = '__express__' + req.originalUrl || req.url;
     let cachedBody = mcache.get(key);
-    if (cachedBody) {
+    if (cachedBody) {      
       res.send(cachedBody)
       return;
-
     } else {
       res.sendResponse = res.send;
       res.send = (body) => {
@@ -33,13 +38,7 @@ const cache = (duration) => {
   }
 }
 
-/* ============================================ */
-app.get("/", (req, res) => {
-  console.log("someone just entered the logger service"); 
-  res.send("<h1>welcome to the <i>logger</i> buddy!</h1>"); 
-});
-
-app.get("/log", cache(secondsInCache), async (req, res) => { 
+app.get("/logs", cache(secondsInCache), async (req, res) => { 
   const name = req.query.containerName;
   const logType = req.query.logType; 
   const minutesAgo = req.query.minutesAgo; 
@@ -66,13 +65,14 @@ app.get("/log", cache(secondsInCache), async (req, res) => {
   res.send(await storage.getLogs(dbQuery)); 
 });
 
-app.get("/containers", async (req, res) => {
-  const data = JSON.parse(fs.readFileSync(config.currentContainersFile));
-  res.send(data);
+/* ============================================ */
+app.delete("/logs", async (req, res) => {
+  await storage.clear();
+  res.send("deleted successfully");
 });
 
 /* ============================================ */
-app.post("/log", (req, res) => {
+app.post("/logs", (req, res) => {
   const containerInfo = {
     Id: "interface",
     Config: {
@@ -89,9 +89,9 @@ app.post("/log", (req, res) => {
 });
 
 /* ============================================ */
-app.delete("/log", async (req, res) => {
-  await storage.clear();
-  res.send("deleted successfully");
+app.get("/containers", async (req, res) => {
+  const data = JSON.parse(fs.readFileSync(config.currentContainersFile));
+  res.send(data);
 });
 
 /* ============================================ */
