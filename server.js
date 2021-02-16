@@ -1,5 +1,5 @@
 /* ============================================ */
-const fs = require("fs"); 
+const fileSystemAPI = require("fs"); 
 const express = require("express");
 const app = express(); 
 const storage = require("./storage");
@@ -90,7 +90,7 @@ app.post("/logs", (req, res) => {
 
 /* ============================================ */
 app.get("/containers", async (req, res) => {
-  const data = JSON.parse(fs.readFileSync(config.currentContainersFile));
+  const data = JSON.parse(fileSystemAPI.readFileSync(config.currentContainersFile));
   res.send(data);
 });
 

@@ -1,5 +1,5 @@
 /*  ========================================= */
-const fs = require("fs");
+const fileSystemAPI = require("fs");
 const storage = require("./storage"); 
 const config = require("./config.json");
 const Dockerode = require("dockerode");
@@ -13,7 +13,7 @@ const attachedContainers = [];
 function saveContainerAttachment(containerInfo) {  
   attachedContainers.push(containerInfo);
   const data = JSON.stringify(attachedContainers);
-  fs.writeFileSync(config.currentContainersFile, data);
+  fileSystemAPI.writeFileSync(config.currentContainersFile, data);
 }
 
 /*  ========================================= */
@@ -45,7 +45,6 @@ async function start() {
 }
 
 /*  ========================================= */
-
 async function logContainer(containerId) {
   const defaultSettings = { follow: true, timestamps: true };
   const container = dockerConnection.getContainer(containerId);
