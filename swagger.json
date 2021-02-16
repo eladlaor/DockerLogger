@@ -14,7 +14,7 @@
     },
     {
       "name": "containers",
-      "description": "View information about the containers dockerLogger is listening to"
+      "description": "View information about the containers DockerLogger is listening to"
     }
   ],
   "schemes": ["http"],
