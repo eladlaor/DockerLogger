@@ -25,7 +25,6 @@ async function start() {
   });
 
   newContainersStream.on("data", (buffer) => {
-    // Logging new container
     const eventInfo = JSON.parse(buffer.toString());
     console.log(
       `New container detected, named: (${eventInfo.Actor.Attributes.name})`
@@ -94,7 +93,6 @@ async function logContainer(containerId) {
       stdout: true,
     });
 
-// 'on' sends the content of future events (Message model [in buffer format] in this case) to param
     logsStdout.on("data", (incoming_message) => storage.writeLog(incoming_message, containerInfo));
   }
 
