@@ -1,31 +1,33 @@
 /* ============================================ */
-const Dockerode = require('dockerode');
+const Dockerode = require("dockerode");
 const dockerConnection = new Dockerode();
-const express = require('express');
+const express = require("express");
 const app = express();
 const port = 4000;
 
 /* ============================================ */
-app.get('/', (req, res) => {
-	console.log("Fulfilling my purpose in life as a container: creating a log!");
-	res.send("<h1>Welcome to log-maker!</h1> Go to '/log_stdout' to send a log to stdout, or to '/log_stderr' to send it to stderr.");
-})
+app.get("/", (req, res) => {
+  console.log("Fulfilling my purpose in life as a container: creating a log!");
+  res.send(
+    "<h1>Welcome to log-maker!</h1> Go to '/log_stdout' to send a log to stdout, or to '/log_stderr' to send it to stderr."
+  );
+});
 
-app.get('/hi', (req, res) => {
-	console.log("");
-	res.send("hi to you too");
-})
+app.get("/hi", (req, res) => {
+  console.log("");
+  res.send("hi to you too");
+});
 
-app.get('/log_stdout', (req, res) => {
-	console.log("out-standing! This log was sent to stdout");
-	res.send("out-standing! A log was sent to stdout");
-})
+app.get("/log_stdout", (req, res) => {
+  console.log("out-standing! This log was sent to stdout");
+  res.send("out-standing! A log was sent to stdout");
+});
 
-app.get('/log_stderr', (req, res) => {
-	console.error("err-gonomic! This log was sent to stderr");
-	res.send("err-gonomic! A log was sent to stderr");
-})
+app.get("/log_stderr", (req, res) => {
+  console.error("err-gonomic! This log was sent to stderr");
+  res.send("err-gonomic! A log was sent to stderr");
+});
 
 app.listen(port, () => {
-	console.log(`log-maker is listening at port http:localhost:${port}`);
-})
+  console.log(`log-maker is listening at port http:localhost:${port}`);
+});

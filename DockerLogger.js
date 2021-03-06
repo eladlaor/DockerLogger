@@ -1,24 +1,37 @@
 /*  ========================================= */
 const fileSystemAPI = require("fs");
-const storage = require("./storage"); 
+const storage = require("./storage");
 const config = require("./config.json");
 const Dockerode = require("dockerode");
 const dockerConnection = new Dockerode();
+const serverDockerLogger = require("./server");
 
 /*  ========================================= */
 const detectedContainersCounter = {};
+const labelsToAttach = [];
+
 const attachedContainers = [];
+const emptyFile = JSON.stringify(attachedContainers);
+fileSystemAPI.writeFileSync(config.currentContainersFile, emptyFile);
 
 /*  ========================================= */
-function saveContainerAttachment(containerInfo) {  
+function saveContainerAttachment(containerInfo) {
   attachedContainers.push(containerInfo);
   const data = JSON.stringify(attachedContainers);
   fileSystemAPI.writeFileSync(config.currentContainersFile, data);
 }
 
 /*  ========================================= */
+
+function addLabel(label) {
+  labelsToAttach.push(label);
+  const updatedData = JSON.stringify(labelsToAttach);
+  fileSystemAPI.writeFileSync(config.currentLabelsFile, updatedData);
+}
+
+/*  ========================================= */
 async function start() {
-  await storage.clear(); 
+  await storage.clear();
 
   const newContainersStream = await dockerConnection.getEvents({
     filters: '{ "event": ["create"], "Type": ["container"] }',
@@ -31,81 +44,66 @@ async function start() {
     );
     logContainer(eventInfo.id);
   });
-
-  dockerConnection.listContainers(
-    { all: config.logStoppedContainersAlso },
-    function (err, containers) {
-      if (err) {
-        console.error("Docker is not running!");
-      } else {
-        containers.forEach((containerInfo) => logContainer(containerInfo.Id));
-      }
-    }
-  );
 }
 
 /*  ========================================= */
 async function logContainer(containerId) {
   const defaultSettings = { follow: true, timestamps: true };
   const container = dockerConnection.getContainer(containerId);
-  const containerInfo = await container.inspect(); 
-  const containerImage = containerInfo.Config.Image; 
+  const containerInfo = await container.inspect();
+  const containerImage = containerInfo.Config.Image;
 
-  let shouldListen = true;
-  let maxAttached = 0;
-  let lowListenThreshold = 0;
-  let attachOneForEvery = 0;
+  let shouldListen = false;
 
-  if (!config.imageSettings[containerImage]) {
-    maxAttached = config.imageSettings["*"].maxAttached;
-    lowListenThreshold = config.imageSettings["*"].lowListenThreshold;
-    attachOneForEvery = config.imageSettings["*"].attachOneForEvery;
-  } else {
-    maxAttached = config.imageSettings[containerImage].maxAttached;
-    lowListenThreshold = config.imageSettings[containerImage].lowListenThreshold;
-    attachOneForEvery = config.imageSettings[containerImage].attachOneForEvery;
-  }
-  
-  if (!detectedContainersCounter[containerImage]) { 
-    detectedContainersCounter[containerImage] = {
-      listenedTo: 0,
-      total: 0,
-    };
-  } else if (detectedContainersCounter[containerImage].listenedTo >= maxAttached) {
-    shouldListen = false;
-  } else if (
-    detectedContainersCounter[containerImage].listenedTo >
-      lowListenThreshold &&
-    detectedContainersCounter[containerImage].total % attachOneForEvery != 0
-  ) {
-    shouldListen = false;
-  }
+  labelsToAttach.forEach((label) => {
+    const key = Object.keys(label)[0];
+    const value = label[key];
+
+    if (
+      Object.keys(containerInfo.Config.Labels).find(
+        (currentKey) => currentKey === key
+      ) &&
+      containerInfo.Config.Labels[key] === value
+    ) {
+      console.log("This container will be attached to the logger.");
+      shouldListen = true;
+    } else {
+      console.log("This container will NOT be attached.");
+    }
+  });
 
   if (shouldListen) {
-    saveContainerAttachment({ id: containerInfo.Id,
+    saveContainerAttachment({
+      id: containerInfo.Id,
       image: containerInfo.Config.Image,
-      name: containerInfo.Name})
+      name: containerInfo.Name,
+    });
 
-    detectedContainersCounter[containerImage].listenedTo++;
     const logsStdout = await container.logs({
-      ...defaultSettings, 
+      ...defaultSettings,
       stdout: true,
     });
 
-    logsStdout.on("data", (incoming_message) => storage.writeLog(incoming_message, containerInfo));
+    logsStdout.on("data", (incomingMessage) =>
+      storage.writeLog(incomingMessage, containerInfo)
+    );
   }
-
-  detectedContainersCounter[containerImage].total++;
 
   if (config.logErrorsOfAll) {
     const logsStderr = await container.logs({
       ...defaultSettings,
       stderr: true,
     });
-    logsStderr.on("data", (incoming_message) =>
-      storage.writeLog(incoming_message, containerInfo)
+    logsStderr.on("data", (incomingMessage) =>
+      storage.writeLog(incomingMessage, containerInfo)
     );
   }
 }
 
-module.exports = { start };
+start();
+
+serverDockerLogger.listen(config.port, () => {
+  console.log(`DockerLogger is now listening on port ${config.port}`);
+});
+
+exports.addLabel = addLabel;

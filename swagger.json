@@ -1,5 +1,5 @@
 {
-  "swagger": "2.0",
+  "swagger": "2.0", 
   "info": {
     "description": "This is an API UI for DockerLogger, created by Elad Laor, for [Codefresh](https://codefresh.io)",
     "version": "1.0.0",
@@ -83,6 +83,33 @@
         "produces": ["application/json"],
         "parameters": [      ],
         "responses": { "200": { "description": "Containers list retrieved" } },
+        "security": []
+      }
+    },
+    "/labels": {
+      "post": {
+        "tags": ["labels"],
+        "summary": "Add a label signifier",
+        "description": "",
+        "consumes": ["application/json"],
+        "produces": ["application/json"],
+        "parameters": [
+          {
+            "name": "labelKey",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "type": "string"
+          },
+          {
+            "name": "labelValue",
+            "in": "query",
+            "description": "",
+            "required": true,
+            "type": "string"
+          }          
+        ],
+        "responses": { "200": {"description": "New label inserted"} },
         "security": []
       }
     }

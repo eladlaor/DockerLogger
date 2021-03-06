@@ -2,23 +2,27 @@
   "port": 3000,
   "storage": "mongoDB",
   "currentContainersFile": ".attachedContainers.json",
+  "currentLabelsFile": ".labelsOfContainersToAttach.json",
   "logErrorsOfAll": true,
   "logStoppedContainersAlso": false,
   "imageSettings": {
     "exampleimage": {
       "lowListenThreshold": 5,
-      "attachOneForEvery" : 3,
-      "maxAttached": 80
+      "attachOneForEvery": 3,
+      "maxAttached": 15
     },
     "examplepercent" : {
       "lowListenThreshold": 1,
-      "attachOneForEvery" : 10,
+      "attachOneForEvery": 10,
       "maxAttached": 50      
     },
     "*": {
       "lowListenThreshold": 2,
-      "attachOneForEvery" : 1,
+      "attachOneForEvery": 1,
       "maxAttached": 10
     }
+  },
+  "labelsToLog": {
+    "logMe": "true"
   }
 }

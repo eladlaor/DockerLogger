@@ -1,4 +1,4 @@
-const relevantChars = 39;
+const relevantChars = 39; 
 
 function writeLog(message, containerInfo) {
   console.debug(
