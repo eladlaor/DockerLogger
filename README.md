@@ -66,9 +66,9 @@
                 for any image which you do not wish to provide a custom behavior for.
 
 ## Run    
-```    npm i ```
+```npm i```
     
-```    node index.js  ```
+```node index.js```
 
         after a moment, you'll see the following output: 
         // 
