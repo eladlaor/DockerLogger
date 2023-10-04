@@ -106,13 +106,13 @@
 
         Regarding
             Building a new image at runtime:
-                There is NO problem with running new CONTAINERS after DockerLogger is already running.
+                There is no problem with running new CONTAINERS after DockerLogger is already running.
                 However, there's an error that requires fixing, when building a new image while the program is running.
     
     Further improvements:
 
         Enhance selection logic
-            A better selection logic would have been taken into account the frequency of usage
+            A better selection logic would have been taking into account the frequency of usage
             for each container and/or image, and would analyze it to determine dynamically
             its level of importance to the user.
             Through such a mechanism, the user would both:
